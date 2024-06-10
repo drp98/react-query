@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import User from './components/User';
+import Users from './components/Users';
+import AddUserForm from './components/AddUserForm';
+
+const queryClient = new QueryClient();
 
 function App() {
+  const [userId, setUserId] = React.useState(1);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className='flex flex-col p-5'>
+        <div className='flex'>
+          <Users setUserId={setUserId} />
+          {userId > -1 && <User userId={userId} setUserId={setUserId} />}
+        </div>
+        <AddUserForm />
+      </div>
+    </QueryClientProvider>
   );
 }
 
